@@ -32,13 +32,13 @@ class _ContactFormState extends State<ContactForm> {
               style: const TextStyle(fontSize: 24.0),
             ),
             Padding(
-              padding: EdgeInsets.only(top: 8.0),
+              padding: const EdgeInsets.only(top: 8.0),
               child: TextField(
                 controller: _accountNumberController,
                 decoration: const InputDecoration(
                   labelText: 'Account number',
                 ),
-                style: TextStyle(fontSize: 24.0),
+                style: const TextStyle(fontSize: 24.0),
                 keyboardType: TextInputType.number,
               ),
             ),
