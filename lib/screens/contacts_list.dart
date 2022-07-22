@@ -1,28 +1,32 @@
+import 'package:bytebankinternalstorage/database/app_database.dart';
 import 'package:bytebankinternalstorage/models/contact.dart';
 import 'package:bytebankinternalstorage/screens/contact_form.dart';
 import 'package:flutter/material.dart';
 
 class ContactList extends StatelessWidget {
-  ContactList({Key? key}) : super(key: key);
-
-  final List<Contact> contacts = [];
+  const ContactList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    contacts.add(Contact(0, 'limax', 1000));
-    contacts.add(Contact(0, 'limax', 2000));
-    contacts.add(Contact(0, 'limax', 3000));
     return Scaffold(
       appBar: AppBar(
         title: const Text('Contacts'),
       ),
-      body: ListView.builder(
-        itemBuilder: (context, index) {
-          final Contact contact = contacts[index];
-          return _ContactItem(contact);
-        },
-        itemCount: contacts.length,
-      ),
+      body: FutureBuilder<List<Contact>>(
+          future: findAll(),
+          builder: (context, snapshot) {
+            final List<Contact>? contacts = snapshot.data;
+            if (contacts != null) {
+              return ListView.builder(
+                itemBuilder: (context, index) {
+                  final Contact contact = contacts[index];
+                  return _ContactItem(contact);
+                },
+                itemCount: contacts.length,
+              );
+            }
+            return Container();
+          }),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context)
