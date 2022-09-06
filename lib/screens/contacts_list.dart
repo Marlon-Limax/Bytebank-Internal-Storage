@@ -1,3 +1,5 @@
+// ignore_for_file: dead_code
+
 import 'package:bytebankinternalstorage/database/app_database.dart';
 import 'package:bytebankinternalstorage/models/contact.dart';
 import 'package:bytebankinternalstorage/screens/contact_form.dart';
@@ -17,28 +19,39 @@ class ContactList extends StatelessWidget {
         future: Future.delayed(const Duration(seconds: 1))
             .then((value) => findAll()),
         builder: (context, snapshot) {
-          if (snapshot.data != null) {
-            final List<Contact>? contacts = snapshot.data;
-            if (contacts != null) {
-              return ListView.builder(
-                itemBuilder: (context, index) {
-                  final Contact contact = contacts[index];
-                  return _ContactItem(contact);
-                },
-                itemCount: contacts.length,
+          switch (snapshot.connectionState) {
+            case ConnectionState.none:
+              break;
+            case ConnectionState.waiting:
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: const [
+                    CircularProgressIndicator(),
+                    Text('loading'),
+                  ],
+                ),
               );
-            }
+              break;
+            case ConnectionState.active:
+              break;
+            case ConnectionState.done:
+              if (snapshot.data != null) {
+                final List<Contact>? contacts = snapshot.data;
+                if (contacts != null) {
+                  return ListView.builder(
+                    itemBuilder: (context, index) {
+                      final Contact contact = contacts[index];
+                      return _ContactItem(contact);
+                    },
+                    itemCount: contacts.length,
+                  );
+                }
+              }
+              break;
           }
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: const [
-                CircularProgressIndicator(),
-                Text('loading'),
-              ],
-            ),
-          );
+          return const Text('Unknown error');
         },
       ),
       floatingActionButton: FloatingActionButton(

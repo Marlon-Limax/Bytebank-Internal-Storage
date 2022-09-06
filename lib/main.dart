@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import
+
 import 'package:bytebankinternalstorage/database/app_database.dart';
 import 'package:bytebankinternalstorage/models/contact.dart';
 import 'package:bytebankinternalstorage/screens/contact_form.dart';
