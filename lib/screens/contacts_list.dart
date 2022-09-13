@@ -1,6 +1,6 @@
 // ignore_for_file: dead_code
 
-import 'package:bytebankinternalstorage/database/app_database.dart';
+import 'package:bytebankinternalstorage/database/dao/contact_dao.dart';
 import 'package:bytebankinternalstorage/models/contact.dart';
 import 'package:bytebankinternalstorage/screens/contact_form.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +13,8 @@ class ContactList extends StatefulWidget {
 }
 
 class _ContactListState extends State<ContactList> {
+  final ContactDao _dao = ContactDao();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +24,7 @@ class _ContactListState extends State<ContactList> {
       body: FutureBuilder<List<Contact>>(
         initialData: const [],
         future: Future.delayed(const Duration(seconds: 1))
-            .then((value) => findAll()),
+            .then((value) => _dao.findAll()),
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.none:
