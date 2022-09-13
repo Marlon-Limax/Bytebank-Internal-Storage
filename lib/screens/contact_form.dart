@@ -1,6 +1,8 @@
 import 'package:bytebankinternalstorage/models/contact.dart';
 import 'package:flutter/material.dart';
 
+import '../database/app_database.dart';
+
 class ContactForm extends StatefulWidget {
   const ContactForm({Key? key}) : super(key: key);
 
@@ -52,7 +54,7 @@ class _ContactFormState extends State<ContactForm> {
                     final int? accountNumber =
                         int.tryParse(_accountNumberController.text);
                     final Contact newContact = Contact(1, name, accountNumber);
-                    Navigator.pop(context, newContact);
+                    save(newContact).then((id) => Navigator.pop(context));
                   },
                   child: const Text('Create'),
                 ),

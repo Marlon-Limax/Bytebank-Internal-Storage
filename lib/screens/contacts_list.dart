@@ -5,9 +5,14 @@ import 'package:bytebankinternalstorage/models/contact.dart';
 import 'package:bytebankinternalstorage/screens/contact_form.dart';
 import 'package:flutter/material.dart';
 
-class ContactList extends StatelessWidget {
+class ContactList extends StatefulWidget {
   const ContactList({Key? key}) : super(key: key);
 
+  @override
+  State<ContactList> createState() => _ContactListState();
+}
+
+class _ContactListState extends State<ContactList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,7 +68,7 @@ class ContactList extends StatelessWidget {
                 ),
               )
               .then(
-                (newContact) => debugPrint(newContact.toString()),
+                (reload) => setState(() {}),
               );
         },
         child: const Icon(Icons.add),
